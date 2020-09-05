@@ -17,15 +17,20 @@ namespace Services.Models
 {
     public class ArticleService : IArticleService
     {
+        #region DI
         private readonly IArticleRepository _articleRepository;
         private readonly ImageModel _imageModel;
+        #endregion
 
+        #region Constructor
         public ArticleService(IArticleRepository articleRepository,IOptions<ImageModel> options)
         {
             _articleRepository = articleRepository;
             _imageModel = options.Value;
 
         }
+        #endregion
+
         #region Article CRUD & Search
         public ReturnModel ArticleAdd(AddArticleRequestModel Model, ImageUploadRequestModel ImageModel)
         {
@@ -33,17 +38,17 @@ namespace Services.Models
             {
                 if (Model == null)
                 {
-                    return new ReturnModel("", "");
+                    return new ReturnModel("Hiç veri girilmediğinden işlem gerçekleştirilemedi.", "8Z46Q9UU4P");
                 }
 
                 if (Model.Title == null)
                 {
-                    return new ReturnModel("", "");
+                    return new ReturnModel("Başlık bilgisi girilmediğin işlem gerçekleştirilemedi.", "F4L8NW11AJ");
                 }
 
                 if (Model.Content == null)
                 {
-                    return new ReturnModel("", "");
+                    return new ReturnModel("İçerik bilgisi girilmediğinden işlem gerçekleştirilemedi.", "FUEST5ANL5");
                 }
 
                 string Image = null;
@@ -53,17 +58,17 @@ namespace Services.Models
                     {
                         if (ImageModel.WwwRoot == null)
                         {
-                            return new ReturnModel("", "");
+                            return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "HFLMOE42BJ");
                         }
 
                         if (_imageModel.FolderName != null)
                         {
-                            return new ReturnModel("", "");
+                            return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "VP3TZHA2QS");
                         }
 
                         if (!Model.File.ContentType.Contains("Image"))
                         {
-                            return new ReturnModel("", "");
+                            return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "19C97GGDEY");
                         }
 
                         string ImageName = $"{Guid.NewGuid().ToString().Substring(5)}.{Model.File.ContentType.Split('/')[1]}";
@@ -78,16 +83,16 @@ namespace Services.Models
 
                         if (!File.Exists(FolderPath))
                         {
-                            return new ReturnModel("", "");
+                            return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "A29Y5O3CI9");
                         }
 
-                        Image = FolderPath;
+                        Image = $"/{_imageModel.FolderName}/{ImageName}";
                     }
                 }
 
                 if (Model.Author == null)
                 {
-                    return new ReturnModel("", "");
+                    return new ReturnModel("Yazar bilgisi girilmediğinden işlem gerçekleştirilemedi.", "XQ99TJWRY8");
                 }
 
                 var ArticleModel = new Articles()
@@ -104,14 +109,14 @@ namespace Services.Models
 
                 if (GetRecord.Id == 0)
                 {
-                    return new ReturnModel("", "");
+                    return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "95D5NU0H2A");
                 }
 
                 return new ReturnModel();
             }
             catch (Exception Ex)
             {
-                return new ReturnModel("", "");
+                return new ReturnModel($"Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi. Hata detayı : {Ex.Message}", "SQ343ZCD1X");
             }
         }
 
@@ -206,7 +211,7 @@ namespace Services.Models
             catch (Exception Ex)
             {
 
-                return new ParameterReturnModel<List<ArticleReturnModel>>("", "");
+                return new ParameterReturnModel<List<ArticleReturnModel>>($"Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi. Hata detayı : {Ex.Message}", "6H17CMHSR0");
             }
         }
 
@@ -216,24 +221,24 @@ namespace Services.Models
             {
                 if (Model == null)
                 {
-                    return new ReturnModel("", "");
+                    return new ReturnModel("Hiç veri girilmediğinden işlem gerçekleştirilemedi.", "X72HJTSS55");
                 }
 
                 if (Model.Id == 0)
                 {
-                    return new ReturnModel("", "");
+                    return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "UZEW5HEYAL");
                 }
 
                 var GetArticle = _articleRepository.Get(Model.Id);
 
                 if (Model.Title == null)
                 {
-                    return new ReturnModel("", "");
+                    return new ReturnModel("Başlık bilgisi girilmediğin işlem gerçekleştirilemedi.", "");
                 }
 
                 if (Model.Content == null)
                 {
-                    return new ReturnModel("", "");
+                    return new ReturnModel("İçerik bilgisi girilmediğinden işlem gerçekleştirilemedi.", "II1JT41VT3");
                 }
 
 
@@ -243,17 +248,17 @@ namespace Services.Models
                     {
                         if (ImageModel.WwwRoot == null)
                         {
-                            return new ReturnModel("", "");
+                            return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "F9E3VPVYQ0");
                         }
 
                         if (_imageModel.FolderName != null)
                         {
-                            return new ReturnModel("", "");
+                            return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "V0N7W750F4");
                         }
 
                         if (!Model.File.ContentType.Contains("Image"))
                         {
-                            return new ReturnModel("", "");
+                            return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "AUVEHNXAJ5");
                         }
 
                         string ImageName = $"{Guid.NewGuid().ToString().Substring(5)}.{Model.File.ContentType.Split('/')[1]}";
@@ -268,16 +273,16 @@ namespace Services.Models
 
                         if (!File.Exists(FolderPath))
                         {
-                            return new ReturnModel("", "");
+                            return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "UK8VFUDUY8");
                         }
 
-                        GetArticle.Image = FolderPath;
+                        GetArticle.Image = $"/{_imageModel.FolderName}/{ImageName}";
                     }
                 }
 
                 if (Model.Author == null)
                 {
-                    return new ReturnModel("", "");
+                    return new ReturnModel("Yazar bilgisi girilmediğinden işlem gerçekleştirilemedi.", "1CWM90O6MZ");
                 }
 
                 GetArticle.Title = Model.Title;
@@ -291,7 +296,35 @@ namespace Services.Models
             }
             catch (Exception Ex)
             {
-                return new ReturnModel("", "");
+                return new ReturnModel($"Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi. Hata detayı : {Ex.Message}", "BZFB8KIS88");
+            }
+        }
+
+        public ReturnModel ArticleDelete(IdRequestModel Model)
+        {
+            try
+            {
+                if (Model.Id == 0)
+                {
+                    return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "OAME1JY8Y7");
+                }
+
+                var Article = _articleRepository.Get(Model.Id);
+
+                _articleRepository.Delete(Article);
+
+                var IsDeleted = _articleRepository.Get(Model.Id);
+
+                if (IsDeleted != null)
+                {
+                    return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "7ZV77MF69A");
+                }
+                return new ReturnModel();
+            }
+            catch (Exception Ex)
+            {
+
+                return new ReturnModel($"Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi. Hata detayı : {Ex.Message}", "N74Z19ES71");
             }
         }
         #endregion

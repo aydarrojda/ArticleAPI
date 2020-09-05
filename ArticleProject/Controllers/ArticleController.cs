@@ -16,19 +16,25 @@ namespace ArticleProject.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AricleController : ControllerBase
+    public class ArticleController : ControllerBase
     {
+        #region DI
         private readonly IArticleService _articleService;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public AricleController(IArticleService articleService, IWebHostEnvironment webHostEnvironment)
+        #endregion
+
+        #region Constructor
+        public ArticleController(IArticleService articleService, IWebHostEnvironment webHostEnvironment)
         {
             _articleService = articleService;
             _webHostEnvironment = webHostEnvironment;
         }
+        #endregion
 
-        [Route("/Article/Add")]
+        #region Article 
+        [Route("/api/Article/Add")]
         [HttpPost]
-        public ReturnModel Add(AddArticleRequestModel Model)
+        public ReturnModel Add([FromBody]AddArticleRequestModel Model)
         {
             try
             {
@@ -50,10 +56,9 @@ namespace ArticleProject.Controllers
             }
         }
 
-
-        [Route("/Article/Detail/{Id}")]
+        [Route("/api/Article/Detail")]
         [HttpGet]
-        public ParameterReturnModel<ArticleReturnModel> Detail(IdRequestModel Model)
+        public ParameterReturnModel<ArticleReturnModel> Detail([FromBody] IdRequestModel Model)
         {
             try
             {
@@ -76,7 +81,7 @@ namespace ArticleProject.Controllers
             }
         }
 
-        [Route("/Article/List")]
+        [Route("/api/Article/List")]
         [HttpGet]
         public ParameterReturnModel<List<ArticleReturnModel>> List()
         {
@@ -96,15 +101,15 @@ namespace ArticleProject.Controllers
             }
         }
 
-        [Route("/Article/Update")]
-        [HttpPost]
-        public ReturnModel Update(UpdateArticleRequestModel Model)
+        [Route("/api/Article/Update")]
+        [HttpPut]
+        public ReturnModel Update([FromBody] UpdateArticleRequestModel Model)
         {
             try
             {
                 if (Model == null)
                 {
-                    return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "");
+                    return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "W38KV9B08G");
                 }
                 var Result = _articleService.ArticleUpdate(Model, new ImageUploadRequestModel() { WwwRoot = _webHostEnvironment.WebRootPath });
 
@@ -116,21 +121,22 @@ namespace ArticleProject.Controllers
             }
             catch (Exception Ex)
             {
-                return new ReturnModel($"Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi. Hata detayı : {Ex.Message}", "");
+                return new ReturnModel($"Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi. Hata detayı : {Ex.Message}", "UCIZ0MRQT2");
             }
         }
 
-        [Route("/Article/Search")]
-        [HttpPost]
-        public ReturnModel Search(SearchRequestModel Model)
+        [Route("/api/Article/Delete")]
+        [HttpDelete]
+        public ReturnModel Delete([FromBody] IdRequestModel Model)
         {
             try
             {
                 if (Model == null)
                 {
-                    return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "");
+                    return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "GU62D7ZEZT");
                 }
-                var Result = _articleService.ArticleSearch(Model);
+
+                var Result = _articleService.ArticleDelete(Model);
 
                 if (Result.Success == false)
                 {
@@ -140,8 +146,33 @@ namespace ArticleProject.Controllers
             }
             catch (Exception Ex)
             {
-                return new ReturnModel($"Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi. Hata detayı : {Ex.Message}", "");
+                return new ReturnModel($"Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi. Hata detayı : {Ex.Message}", "QI466MQ4HT");
             }
         }
+
+        [Route("/api/Article/Search")]
+        [HttpPost]
+        public ParameterReturnModel<List<ArticleReturnModel>> Search([FromBody]SearchRequestModel Model)
+        {
+            try
+            {
+                if (Model == null)
+                {
+                    return new ParameterReturnModel<List<ArticleReturnModel>>("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "9ETBUEQBVL");
+                }
+                var Result = _articleService.ArticleSearch(Model);
+
+                if (Result.Success == false)
+                {
+                    return new ParameterReturnModel<List<ArticleReturnModel>>(Result.ErrorMessage, Result.ErrorCode);
+                }
+                return new ParameterReturnModel<List<ArticleReturnModel>>(Result.Model);
+            }
+            catch (Exception Ex)
+            {
+                return new ParameterReturnModel<List<ArticleReturnModel>>($"Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi. Hata detayı : {Ex.Message}", "86QEBCGTSB");
+            }
+        }
+        #endregion
     }
 }

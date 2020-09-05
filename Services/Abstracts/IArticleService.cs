@@ -23,6 +23,8 @@ namespace Services.Abstracts
 
         ParameterReturnModel<List<ArticleReturnModel>> ArticleSearch(SearchRequestModel Model);
 
+        ReturnModel ArticleDelete(IdRequestModel Model);
+
         #endregion
     }
 }
