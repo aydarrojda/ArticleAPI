@@ -81,7 +81,7 @@ namespace Services.Models
 
                         }
 
-                        if (!File.Exists(FolderPath))
+                        if (File.Exists(FolderPath)==false)
                         {
                             return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "A29Y5O3CI9");
                         }
@@ -271,7 +271,7 @@ namespace Services.Models
 
                         }
 
-                        if (!File.Exists(FolderPath))
+                        if (File.Exists(FolderPath) == false)
                         {
                             return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "UK8VFUDUY8");
                         }
