@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Data.Entities;
+using Data.SystemModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +34,8 @@ namespace ArticleProject
             services.AddControllers();
 
             services.AddDbContext<ArticleDBContext>(options=>options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.Configure<ImageModel>(Configuration.GetSection("ImageModel"));
 
             #region DI
             #region Repositories DI
