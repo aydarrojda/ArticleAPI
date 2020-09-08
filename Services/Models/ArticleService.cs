@@ -66,7 +66,7 @@ namespace Services.Models
                             return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "VP3TZHA2QS");
                         }
 
-                        if (!Model.File.ContentType.Contains("Image"))
+                        if (!Model.File.ContentType.Contains("image"))
                         {
                             return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "19C97GGDEY");
                         }
@@ -256,7 +256,7 @@ namespace Services.Models
                             return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "V0N7W750F4");
                         }
 
-                        if (!Model.File.ContentType.Contains("Image"))
+                        if (!Model.File.ContentType.Contains("image"))
                         {
                             return new ReturnModel("Teknik bir hata meydana geldiğinden işlem gerçekleştirilemedi.", "AUVEHNXAJ5");
                         }
